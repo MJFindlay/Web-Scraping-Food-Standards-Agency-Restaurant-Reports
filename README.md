@@ -13,7 +13,7 @@ Lo único miembro del equipo es Mike Findlay.
 
 1. fsa_scraper.py - Código python para extraer los datos de una ciudad - en este caso Belfast en Irlanda del norte.
 1. FSA_Restaurants_Belfast20181112-182218.csv - A CSV formatted file containing the dataset.
-1. fhrs_100x100.jpg - log of the Food Hygiene Rating database
+1. fhrs_100x100.jpg - logo of the Food Hygiene Rating database
 1. README.md file - same as this wiki file
 1. LICENSE.txt - CC-BY-SA-4.0 licence file
 1. Respuestas.pdf - answers to the questions for Práctica 1
