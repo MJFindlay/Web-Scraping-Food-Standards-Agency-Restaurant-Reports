@@ -1,9 +1,6 @@
 # UK FOODS STANDARD AGENCY data scraper in Python 2.7
 # Author M J Findlay
 # Date Nov-2018
-import requests
-import urllib2
-from bs4 import BeautifulSoup
 
 # The search URL is injectable in the following terms:
 # Main URL is http://ratings.food.gov.uk/authority-search/en-GB/
@@ -12,13 +9,13 @@ from bs4 import BeautifulSoup
 # 2. Post Code
 # 3. sort option (alpha, relevance, ratings, distance)
 # 4. Type of business (1=restaurants, 5=hospitals, 7846=mobile caterers, 7845=Schools, 7838=farmers, etc.)
-# 5. Local Authority Area (e.g. 807=Belfast, 760=Aberdeen, 027=Cambridge)
+# 5. Local Authority Area (807=Belfast, 760=Aberdeen, 027=Cambridge)
 # 6. Rating search limit (Equal5, Equal4, EqualAll, etc.) 
 # 7. Display map (0=off, 1=on)
 # 8. Page number to display (1...)
 # 9. Number of results to display / page (does not appear to have a limit)
 # In this case we are interested in restaurants in Belfast City
-# The URL search parameters that we provide will perform the search to return the first 1000 restaurants on one page
+# The URL search parameters that we provide will perform the search to return first 1000 restaurants on one page
 # Note there are actually less than 1000 restaurants in Belfast
 
 # We will use BeautifulSoup to extract the fields from the html records.
@@ -77,10 +74,12 @@ def get_records(page):
     return soup, number_of_hits
 
 # Define function to create the CSV file for the required fields found in the records set
-def build_csv(outputfilename,records):
+def build_csv(outputfilename,records,colheaders):
     import csv
     with open ( outputfilename , 'wb' ) as csvfile:
         foodwriter = csv.writer(csvfile, delimiter = ',' ,quotechar = '"' , quoting = csv.QUOTE_ALL)
+        # Do the headers
+        foodwriter.writerow(colheaders)
         # loop over the list of records        
         for row1 in records.find_all("div", class_="ResultRow"):
             # Fetch the fields of interest
@@ -139,5 +138,5 @@ else:
 import time
 timestring = time.strftime("%Y%m%d-%H%M%S")
 output_file="FSA_Restaurants_Belfast"+timestring+".csv"
-build_csv(output_file,resultsSet)
-
+headerlist=["RestaurantName","PostCode","RatingText","InspectionDate","RatingNum"]
+build_csv(output_file,resultsSet,headerlist)
